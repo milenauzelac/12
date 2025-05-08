@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Sprachspiel Generator</title>
+  <style>
+    body {
+      background-color: white;
+      color: black;
+      font-family: "Suisse BP Int'l", Helvetica, Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #wort {
+      font-size: 5em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+<div id="wort">START</div>
+
+<script>
+const buchstaben = ['A', 'B', 'C', 'I', 'N', 'K', 'O', 'S', 'T'];
+
+const realeWoerter = [
+  "AKTION", "AKT", "BANK", "BIOTIN", "BISS", "BOOT", "CANVAS", "CASANOVA",
+  "CASINO", "IKON", "INSTINKT", "KANON", "KINO", "KIOSK", "KITA", "KNAST",
+  "KONTAKT", "KOST", "NANO", "NATION", "NIKOTIN", "OKTAV", "SOS", "STAB",
+  "STATION", "STOCK", "TABAK", "TAKTIK", "TAT", "TOAST", "VATIKAN"
+];
+
+const wirrKombinationen = [
+  "OT", "KNC", "ASOK", "BIKTO", "STNKIA", "COSABNT", "KINOSTAB", "BATSKONIC",
+  "IKTOSNABKC", "NSTABOKICNT"
+];
+
+function generiereFastName() {
+  const silbenStart = ["BA", "TO", "SA", "NI", "KO", "KA", "ST", "CI", "NO", "IN"];
+  const silbenMitte = ["TI", "KI", "NA", "KO", "SI", "TA", "SO", "BO"];
+  const silbenEnde = ["A", "O", "AN", "IK", "AS", "I", "ON", "OS", "AB", "OK"];
+
+  const start = silbenStart[Math.floor(Math.random() * silbenStart.length)];
+  const mitte = silbenMitte[Math.floor(Math.random() * silbenMitte.length)];
+  const ende = silbenEnde[Math.floor(Math.random() * silbenEnde.length)];
+
+  return start + mitte + ende;
+}
+
+function waehleAusListe(liste) {
+  return liste[Math.floor(Math.random() * liste.length)];
+}
+
+function neuesElement() {
+  const zufall = Math.random();
+  let wort = "";
+
+  if (zufall < 0.15) {
+    wort = waehleAusListe(realeWoerter);         // 15% echte Wörter
+  } else if (zufall < 0.90) {
+    wort = generiereFastName();                  // 75% Fast-Namen
+  } else {
+    wort = waehleAusListe(wirrKombinationen);    // 10% wirr
+  }
+
+  document.getElementById("wort").textContent = wort.toUpperCase();
+}
+
+neuesElement();
+setInterval(neuesElement, 1000);
+</script>
+
+</body>
+</html>
